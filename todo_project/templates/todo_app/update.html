@@ -1,0 +1,103 @@
+{% extends base_template|default:"todo_app/base.html" %}
+{% block title %}
+Create Page
+{% endblock title %}
+{% block content %}
+<div class="container mt-3 " style="border: 1px solid grey; background-color: white;">
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% for todo in todo_list %}
+    <div class="row">
+      <div class="col">
+        <h1 class="display-4 text-left">To-Do List</h1>
+      </div>
+      <div class="col">
+        <div class="text " style="background-color: darkgrey;">
+          <h2 class="text-center mt-3">TECHNICAL CARD</h2>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row m-2" style="border: 1px solid grey;">
+          <div class="col"><label class="col-sm-2 col-form-label" style="font-weight: bold;">Date:</label></div>
+          <div class="col mb-1"><input value="{{todo.date}}" type="datetime-local" class="form-control" name="date" id="date">
+          </div>
+          <div class="w-100"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="row m-1" style="border: 1px solid grey;">
+            <div class="col"> <label for="validationCustom03" class="col-form-label" style="font-weight: bold;">Project
+                Name:</label></div>
+            <div class="col m-2 mr-5"><select id="project_name" name="project_name" id="validationCustom03"
+                style="width:150px" required>
+                <option value="{{todo.id}}">{{todo.project_name}}</option>
+              </select>
+              <div class="invalid-feedback">
+                Please provide a valid city.
+              </div>
+            </div>
+            <div class="col m-1"> <label class="col-form-label" style="font-weight: bold;">Technical
+                Specialist:</label></div>
+            <div class="col m-1"><input value="{{todo.technical_specialist}}" type="text" class="form-control" id="technical_specialist" 
+                name="technical_specialist" pattern="[a-zA-Z0-9-]+"></div>
+
+          </div>
+          <div class="col">
+            <div class="row">
+
+              <div class="row ml-3 mt-4 " style="border: 1px solid grey; font-weight: bold;">
+                <div class="col-1"><label class="col-form-label">Notes:</label></div>
+                <div class="col-11"> <input value="{{todo.notes}}" type="text" class="form-control m-1" name="notes">
+                </div>
+              </div>
+              <div class="row ml-1">
+                <div class="col ml-1 mt-4" style="border: 1px solid grey; font-weight: bold;">
+                  Work Tracking:
+                  <div class="row ">
+                    <div class="col-2"
+                      style="border: 1px solid grey; border-left:0px; border-right: 0px; border-bottom:0px; font-weight: bold; font-weight: bold;">
+                      <label class="col-sm-2 col-form-label">Date</label>
+                    </div>
+                   
+                    <div class="col-2"
+                      style="border: 1px solid grey; border-right: 0px; border-bottom:0px; font-weight: bold; font-weight: bold;">
+                      <label for="validationCustom03" class="col-sm-2 col-form-label">Title</label>
+                    </div>
+                    <div class="col-6"
+                      style="border: 1px solid grey; font-weight: bold; border-bottom:0px; font-weight: bold; ">
+                      <label class="col-sm-2 col-form-label" for="validationCustom03">Description</label>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="col-2"
+                      style="border: 1px solid grey; border-left:0px; border-bottom: 0px; border-right: 0px;"><input  value="{{todo.date}}"
+                        type="datetime-local" class="form-control m-1"></div>
+                   
+                    <div class="col-2 " style="border: 1px solid grey;border-bottom: 0px; border-right: 0px;"> <input value="{{todo.title}}"
+                        type="text" class="form-control m-1" id="validationCustom03" required name="title" id="title"
+                        placeholder="Title" maxlength="50" pattern="[a-zA-Z0-9-]+">
+                      <div class="invalid-feedback">
+                        Please provide a title.
+                      </div>
+                    </div>
+                    <div class="col-6" style="border: 1px solid grey;border-bottom: 0px; "><input value="{{todo.description}}"
+                        type="text" class="form-control m-1" id="validationCustom03" required name="description"
+                        placeholder="Description" maxlength="50" pattern="[a-zA-Z0-9-]+">
+                      <div class="invalid-feedback">
+                        Please provide a description.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-dark m-2">Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  </form>
+</div>
+{% endblock content %}

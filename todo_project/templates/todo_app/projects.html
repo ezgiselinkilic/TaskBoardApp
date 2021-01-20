@@ -1,0 +1,101 @@
+{% extends base_template|default:"todo_app/base.html" %}
+
+{% load static%}
+
+
+{% block title %}
+Home Page
+{% endblock title %}
+
+{% block content %}
+<style>
+  body {
+
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .app {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-flow: column;
+    background-color: #7b9cba;
+
+  }
+
+
+
+  .lists {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    overflow-x: scroll;
+    height: 100%;
+  }
+
+  .lists .list-item {
+
+    width: 20%;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    padding: 15px 20px;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 10px;
+    float: left;
+    box-shadow: 3px 3px black;
+  }
+
+  h1 {
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    text-shadow: 3px 2px 1px black;
+    font-size: 60px;
+  }
+
+  @media only screen and (max-width: 2000px) {
+    .lists .list-item {
+      width: 200px;
+      height: 250px;
+    }
+
+    .btn {
+      margin-left: -10px;
+      width: 150px;
+      white-space: nowrap;
+    }
+  
+
+  }
+</style>
+
+
+<div class="p-5 rounded-lg " style="background-color: #f2ecff">
+  <h2 class="display-4 text-center">To-Do</h2>
+  <p class="text-center">Registered projects are listed on this page.</p>
+  <a class="btn btn-outline-primary " style="margin-left: 43%;" type="submit" href="{% url 'createproject' %}">Add to
+    Project</a>
+
+</div>
+
+<div class="app ">
+  <h1>{{'PROJECTS'}}</h1>
+  <div class="lists ">
+    {% for project in project_list %}
+    <div class="card list-item" ondragend="test('{{project.id}}')" id="{{project.id}}" draggable="true">
+      <a>{{project.project_name}}</a>
+      <div class="card-body">
+        <a class="btn btn-danger mt-3" href="{% url 'deleteProject' project.id %}" role="button">Delete</a>
+        <a class="btn btn-success mt-3" href="{% url 'detailProject' project.id %}" role="button">Project Detail</a>
+      </div>
+    </div>
+
+    {% endfor%}
+  </div>
+
+
+</div>
+{{todo.title}}
+
+{% endblock content %}

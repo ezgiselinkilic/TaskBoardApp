@@ -1,0 +1,203 @@
+{% extends base_template|default:"todo_app/base.html" %}
+
+{% load static%}
+
+
+{% block title %}
+Home Page
+{% endblock title %}
+
+{% block content %}
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .app {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-flow: column;
+    background-color: #7b9cba;
+  }
+
+  .lists {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    overflow-x: scroll;
+    height: 100%;
+    margin-left: 6%;
+  }
+
+  .lists .list {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    width: 100%;
+    min-width: 250px;
+    max-width: 350px;
+    height: 100vh;
+    min-height: 150px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 0 15px;
+
+    transition: all 0.2s linear;
+  }
+
+  .lists .list .list-item {
+    background-color: #f3f3f3;
+    border-radius: 8px;
+
+    text-align: center;
+
+    margin-bottom: 1%;
+
+  }
+
+  h1 {
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    text-shadow: 3px 2px 1px black;
+  }
+
+  .btn-primary {
+    margin-top: 5px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .btn-warning {
+      margin-top: 5px;
+    }
+
+    .btn-primary {
+      margin-top: 5px;
+    }
+
+    .lists {
+      margin-left: 6%;
+    }
+  }
+</style>
+<div class="p-5 rounded-lg " style="background-color: #f2ecff;">
+  <h2 class="display-4 text-center">TO-DO LIST</h2>
+  <p class="text-center">This is To-Do List for Python Django Web Development</p>
+  <div class="text-center">
+    <a class="btn btn-outline-dark" href="{% url 'create' %}" role="button">Create TO-DO List</a>
+  </div>
+</div>
+
+<div class="app ">
+  <div class="lists ">
+    <div class="list" id="list-0">
+      <div class="title">
+        <h1>{{'~TO DO~'}}</h1>
+      </div>
+      {% for todo in todo_list %}
+      {%if todo.status == 0 %}
+      {% if todo.finished %}
+      <div class="card list-item" ondragend="test('{{todo.id}}')" id="{{todo.id}}" draggable="true">
+
+        <div class="card-body">
+          <h5 class="card-title"><del>{{todo.title}}</del></h5>
+
+          <h6 class="card-subtitle mb-2 text-muted">{{todo.date}}</h6>
+          <a class="btn btn-success" href="{% url 'yes_finish' todo.id %}" role="button">YES</a>
+          <a class="btn btn-danger" href="{% url 'deleteTodos' todo.id %}" role="button">Delete</a>
+          <a class="btn btn-warning " href="{% url 'update' todo.id %}" role="button">Update</a>
+          <a class="btn btn-primary " href="{% url 'calculate' todo.id %}" role="button">Tahmini Bitirme Süresi:
+            {{todo.estimated_elapsed_time}} dk </a>
+
+        </div>
+      </div>
+      {% else %}
+      <div class="card list-item" ondragend="test('{{todo.id}}')" id="{{todo.id}}" draggable="true">
+        <div class="card-body">
+          <h5 class="card-title">{{todo.title}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{todo.date}}</h6>
+          <a class="btn btn-success" href="{% url 'no_finish' todo.id %}" role="button">NO</a>
+          <a class="btn btn-danger" href="{% url 'deleteTodos' todo.id %}" role="button">Delete</a>
+          <a class="btn btn-warning" href="{% url 'update' todo.id %}" role="button">Update</a>
+          <a class="btn btn-primary " href="{% url 'calculate' todo.id %}" role="button">Tahmini Bitirme Süresi:
+            {{todo.estimated_elapsed_time}} dk </a>
+
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endfor%}
+    </div>
+    <div class="list" id="list-1">
+      <h1>{{'~IN PROGRESS~'}}</h1>
+      {% for todo in todo_list %}
+      {%if todo.status == 1 %}
+      {% if todo.finished %}
+      <div class="card list-item" ondragend="test('{{todo.id}}')" id="{{todo.id}}" draggable="true">
+        <div class="card-body">
+          <h5 class="card-title"><del>{{todo.title}}</del></h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{todo.date}}</h6>
+          <a class="btn btn-success" href="{% url 'yes_finish' todo.id %}" role="button">YES</a>
+          <a class="btn btn-danger" href="{% url 'deleteTodos' todo.id %}" role="button">Delete</a>
+          <a class="btn btn-warning" href="{% url 'update' todo.id %}" role="button">Update</a>
+          <a class="btn btn-primary " href="{% url 'calculate' todo.id %}" role="button">Tahmini Bitirme Süresi:
+            {{todo.estimated_elapsed_time}} dk </a>
+
+        </div>
+      </div>
+      {% else %}
+      <div class="card list-item" ondragend="test('{{todo.id}}')" id="{{todo.id}}" draggable="true">
+        <div class="card-body">
+          <h5 class="card-title">{{todo.title}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{todo.date}}</h6>
+          <a class="btn btn-success" href="{% url 'no_finish' todo.id %}" role="button">NO</a>
+          <a class="btn btn-danger" href="{% url 'deleteTodos' todo.id %}" role="button">Delete</a>
+          <a class="btn btn-warning" href="{% url 'update' todo.id %}" role="button">Update</a>
+          <a class="btn btn-primary " href="{% url 'calculate' todo.id %}" role="button">Tahmini Bitirme Süresi:
+            {{todo.estimated_elapsed_time}} dk </a>
+
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endfor%}
+    </div>
+    <div class="list" id="list-2">
+      <h1>{{'~ DONE~'}}</h1>
+      {% for todo in todo_list %}
+      {%if todo.status == 2 %}
+      {% if todo.finished %}
+      <div class="card list-item" ondragend="test('{{todo.id}}')" id="{{todo.id}}" draggable="true">
+        <div class="card-body">
+          <h5 class="card-title"><del>{{todo.title}}</del></h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{todo.date}}</h6>
+          <a class="btn btn-success" href="{% url 'yes_finish' todo.id %}" role="button">YES</a>
+          <a class="btn btn-danger" href="{% url 'deleteTodos' todo.id %}" role="button">Delete</a>
+          <a class="btn btn-warning" href="{% url 'update' todo.id %}" role="button">Update</a>
+          <a class="btn btn-primary " href="{% url 'calculate' todo.id %}" role="button">Tahmini Bitirme Süresi:
+            {{todo.estimated_elapsed_time}} dk </a>
+
+        </div>
+      </div>
+      {% else %}
+      <div class="card list-item" ondragend="test('{{todo.id}}')" id="{{todo.id}}" draggable="true">
+        <div class="card-body">
+          <h5 class="card-title">{{todo.title}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{todo.date}}</h6>
+          <a class="btn btn-success" href="{% url 'no_finish' todo.id %}" role="button">NO</a>
+          <a class="btn btn-danger" href="{% url 'deleteTodos' todo.id %}" role="button">Delete</a>
+          <a class="btn btn-warning" href="{% url 'update' todo.id %}" role="button">Update</a>
+          <a class="btn btn-primary" href="{% url 'calculate' todo.id %}" role="button">Tahmini Bitirme Süresi:
+            {{todo.estimated_elapsed_time}} dk </a>
+
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+      {% endfor%}
+    </div>
+  </div>
+</div>
+{{todo.title}}
+
+{% endblock content %}

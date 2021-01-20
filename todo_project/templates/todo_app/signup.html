@@ -1,0 +1,126 @@
+{% block content %}
+<style>
+    .formInput {
+
+        width: 50%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+
+    }
+
+    .button {
+        width: 30%;
+        background-color: #4CAF50;
+        border-radius: 5px;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        margin-left: 11.5%;
+        margin-top: 10px;
+    }
+
+    .login-box {
+
+        text-align: center;
+        width: 60%;
+        margin-left: 18%;
+        margin-top: 1%;
+    }
+
+
+    .title {
+        margin-left: 4%;
+        font-size: 50px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+
+    .text {
+        font-size: 25px;
+    }
+
+    .image {
+
+        width: 26%;
+        height: 31%;
+        margin-left: 40%;
+        background: url("https://cdn4.iconfinder.com/data/icons/general-office/91/General_Office_09-256.png");
+        background-size: contain;
+    }
+
+    .account {
+        margin-left: 11%;
+    }
+
+    .helptext {
+        color: red;
+    }
+    .input{
+        width: 50%;
+        padding: 12px 20px;
+        margin-left: 3%;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+
+<div class="container login-box ">
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="image"></div>
+        <h1 class="title">SIGN UP</h1>
+        <input type="hidden" name="csrfmiddlewaretoken"
+            value="IvJvITwOAjaXgJFZrHtqbzXSvyiRiow1wpIdQbASwUdVV84qu19ZjF8n2yzyMmTI">
+            <div class="row">
+        <label for="id_username" class="text">Username:</label>
+        <input class="formInput" type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus=""
+            required="" id="id_username"><br><span class="helptext">Required. 150 characters or fewer. Letters, digits
+            and @/./+/-/_ only.</span>
+        </div>
+        <div class="row">
+        <label for="id_password1" class="text">Password:</label>
+        <input class="formInput" type="password" name="password1" autocomplete="new-password" required="" id="id_password1"><br><span
+            class="helptext">
+            <ul>
+                Your password can’t be too similar to your other personal information.<br>
+                Your password must contain at least 8 characters.<br>
+                Your password can’t be a commonly used password.<br>
+                Your password can’t be entirely numeric.
+            </ul>
+        </span>
+    </div>
+    <div class="row">
+        <label for="id_password2" class="text">Again:</label><input class="input" type="password" name="password2"
+            autocomplete="new-password" required="" id="id_password2"><br><span class="helptext">Enter the same password
+            as before, for verification.</span>
+        </div>
+        <input type="submit" class="button" value="Signup" id="buton">
+    </form>
+</div>
+
+<script>
+
+    var buton=document.getElementById("buton");
+    buton.onclick=function(){
+    if(document.getElementById("id_password1").value==document.getElementById("id_password2").value)
+    {
+        window.alert("Kayıt Başarılı");
+    }
+    else
+    {
+        window.alert("Şifreler Uyuşmuyor!");
+    }
+}
+    </script>
+{% endblock content %}

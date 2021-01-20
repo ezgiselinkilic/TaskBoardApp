@@ -1,0 +1,23 @@
+{% extends base_template|default:"todo_app/base.html" %}
+
+{% block title %}
+Create Page
+{% endblock title %}
+
+{% block content %}
+
+<div class="card" style="border: 1px solid grey;  margin-left: 35%; margin-top: 15%; width: 25rem;">
+  <form method="POST">
+    {% csrf_token %}
+    <div class="col m-3"> <label for="validationCustom03" class="col-form-label" style="font-weight: bold;">Project
+        Name:</label></div>
+    <div class="col "><input type="text" id="validationCustom03" required class="form-control" name="project_name"
+        id="project_name" placeholder="Enter Project Name" maxlength="50" pattern="[0-9a-zA-Z ]+">
+      <div class="invalid-feedback">
+        Please provide a project name.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success mt-3 ml-3 mb-3" id="button">Save</button>
+  </form>
+</div>
+{% endblock content %}
